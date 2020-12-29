@@ -38,5 +38,29 @@ public class StudentRepository {
 		catch(Exception e){ System.out.println(e);}
 		return studentsList;
 	}
+	
+	public Student getStudents(int id) {
+		studentsList = new ArrayList<Student>();
+		try{  
+			Class.forName("com.mysql.cj.jdbc.Driver");  
+			Connection con=DriverManager.getConnection(  
+			"jdbc:mysql://localhost:3306/Students","root","");  
+			Statement stmt=con.createStatement();  
+			ResultSet rs=stmt.executeQuery("select * from firstclass where ID = " + id);  
+			
+			while(rs.next()) {
+				student = new Student();
+				student.setId(rs.getInt("ID"));
+				student.setFirstName(rs.getString("FirstName"));
+				student.setLastName(rs.getString("LastName"));
+				student.setAge(rs.getInt("Age"));			
+				}
+			rs.close();
+			con.close();  
+			
+		}
+		catch(Exception e){ System.out.println(e);}
+		return student;
+	}
 
 }
