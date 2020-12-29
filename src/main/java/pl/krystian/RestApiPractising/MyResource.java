@@ -5,6 +5,7 @@ import java.util.List;
 import com.google.gson.Gson;
 
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
@@ -52,5 +53,13 @@ public class MyResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public void updateIt(Student object) {
     	studentRepository.updateStudent(object);
+    }
+    
+    
+    @DELETE
+    @Path("delete")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void deleteIt(Student object) {
+    	studentRepository.deleteStudent(object);
     }
 }
