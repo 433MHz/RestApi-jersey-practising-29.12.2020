@@ -9,8 +9,8 @@ import java.util.List;
 
 public class StudentRepository {
 	
-	Student student;
-	List<Student> studentsList = new ArrayList<Student>();
+	private Student student;
+	private List<Student> studentsList = new ArrayList<Student>();
 	
 	public List<Student> getStudents() {
 		studentsList = new ArrayList<Student>();
@@ -40,7 +40,6 @@ public class StudentRepository {
 	}
 	
 	public Student getStudents(int id) {
-		studentsList = new ArrayList<Student>();
 		try{  
 			Class.forName("com.mysql.cj.jdbc.Driver");  
 			Connection con=DriverManager.getConnection(  
@@ -63,4 +62,23 @@ public class StudentRepository {
 		return student;
 	}
 
+	public void addStudent(Student student) {
+		try{  
+			Class.forName("com.mysql.cj.jdbc.Driver");  
+			Connection con=DriverManager.getConnection(  
+			"jdbc:mysql://localhost:3306/Students","root","");  
+			Statement stmt=con.createStatement();  
+			
+			String sql = "insert into firstclass values (" 
+			+ student.getId() +
+			",'" + student.getFirstName() + "'" +
+			",'" + student.getLastName() + "'," +
+			student.getAge() + ")";
+			
+			stmt.executeUpdate(sql);
+			
+			con.close();
+		}
+		catch(Exception e){ System.out.println(e);}
+	}
 }
