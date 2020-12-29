@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
@@ -41,8 +42,15 @@ public class MyResource {
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
     public String setIt(Student object) {
-    	Student student = object;
-    	studentRepository.addStudent(student);
+    	studentRepository.addStudent(object);
     	return "Done";
+    }
+    
+    
+    @PUT
+    @Path("update")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void updateIt(Student object) {
+    	studentRepository.updateStudent(object);
     }
 }

@@ -81,4 +81,23 @@ public class StudentRepository {
 		}
 		catch(Exception e){ System.out.println(e);}
 	}
+
+	public void updateStudent(Student student) {
+		try{  
+			Class.forName("com.mysql.cj.jdbc.Driver");  
+			Connection con=DriverManager.getConnection(  
+			"jdbc:mysql://localhost:3306/Students","root","");  
+			Statement stmt=con.createStatement();  
+			
+			String sql = "update firstclass set FirstName='"
+			+ student.getFirstName() + "'" +
+			",LastName='" + student.getLastName() + "',Age=" +
+			student.getAge() + " where ID = " + student.getId(); 
+			
+			stmt.executeUpdate(sql);
+			
+			con.close();
+		}
+		catch(Exception e){ System.out.println(e);}
+	}
 }
