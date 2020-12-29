@@ -21,20 +21,18 @@ public class MyResource {
     @GET
     @Path("getall")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getIt() {
+    public List<Student> getIt() {
     	
     	List<Student> list = studentRepository.getStudents();
-    	String answer = gson.toJson(list);
-    	return answer;
+    	return list;
     }
     
     @GET
     @Path("get/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getIt(@PathParam("id")int id) {
+    public Student getIt(@PathParam("id")int id) {
     	Student student = studentRepository.getStudents(id);
-    	String answer = gson.toJson(student);
-    	return answer;
+    	return student;
     }
 
     @POST
