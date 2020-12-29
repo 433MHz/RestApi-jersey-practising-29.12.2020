@@ -19,8 +19,7 @@ public class StudentRepository {
 			Connection con=DriverManager.getConnection(  
 			"jdbc:mysql://localhost:3306/Students","root","");  
 			Statement stmt=con.createStatement();  
-			ResultSet rs=stmt.executeQuery("select * from FirstClass");  
-			con.close();  
+			ResultSet rs=stmt.executeQuery("select * from firstclass");  
 			
 			while(rs.next()) {
 				student = new Student();
@@ -31,7 +30,11 @@ public class StudentRepository {
 				student.setAge(rs.getInt("Age"));
 				
 				studentsList.add(student);
-			}}
+			}
+			rs.close();
+			con.close();  
+			
+		}
 		catch(Exception e){ System.out.println(e);}
 		return studentsList;
 	}

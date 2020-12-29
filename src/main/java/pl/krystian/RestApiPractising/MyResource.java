@@ -1,25 +1,28 @@
 package pl.krystian.RestApiPractising;
 
+import java.util.List;
+
+import com.google.gson.Gson;
+
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
-/**
- * Root resource (exposed at "myresource" path)
- */
-@Path("myresource")
-public class MyResource {
 
-    /**
-     * Method handling HTTP GET requests. The returned object will be sent
-     * to the client as "text/plain" media type.
-     *
-     * @return String that will be returned as a text/plain response.
-     */
+@Path("student")
+public class MyResource {
+	
+	Gson gson = new Gson();
+	StudentRepository studentRepository = new StudentRepository();
+	
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
+    @Path("getAll")
+    @Produces(MediaType.APPLICATION_JSON)
     public String getIt() {
-        return "Got it!";
+    	
+    	List<Student> list = studentRepository.getStudents();
+    	String answer = gson.toJson(list);
+    	return answer;
     }
 }
