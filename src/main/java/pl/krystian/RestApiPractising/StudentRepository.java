@@ -2,6 +2,7 @@ package pl.krystian.RestApiPractising;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -67,16 +68,14 @@ public class StudentRepository {
 			Class.forName("com.mysql.cj.jdbc.Driver");  
 			Connection con=DriverManager.getConnection(  
 			"jdbc:mysql://localhost:3306/Students","root","");  
-			Statement stmt=con.createStatement();  
-			
-			String sql = "insert into firstclass values (" 
-			+ student.getId() +
-			",'" + student.getFirstName() + "'" +
-			",'" + student.getLastName() + "'," +
-			student.getAge() + ")";
-			
-			stmt.executeUpdate(sql);
-			
+			String sql = "insert into firstclass values (?, ?, ?, ?)";
+			PreparedStatement stmt=con.prepareStatement(sql);
+			stmt.setInt(1, student.getId());
+			stmt.setString(2, student.getFirstName());
+			stmt.setString(3, student.getLastName());
+			stmt.setInt(4, student.getAge());
+			stmt.executeUpdate();
+			stmt.close();
 			con.close();
 		}
 		catch(Exception e){ System.out.println(e);}
@@ -87,15 +86,31 @@ public class StudentRepository {
 			Class.forName("com.mysql.cj.jdbc.Driver");  
 			Connection con=DriverManager.getConnection(  
 			"jdbc:mysql://localhost:3306/Students","root","");  
-			Statement stmt=con.createStatement();  
+			String sql = "update firstclass set FirstName=?, LastName=? ,Age=? where ID = ?";
+			PreparedStatement stmt=con.prepareStatement(sql);
+			stmt.setString(1, student.getFirstName());
+			stmt.setString(2, student.getLastName());
+			stmt.setInt(3, student.getAge());
+			stmt.setInt(4, student.getId());
+			stmt.executeUpdate();
 			
-			String sql = "update firstclass set FirstName='"
-			+ student.getFirstName() + "'" +
-			",LastName='" + student.getLastName() + "',Age=" +
-			student.getAge() + " where ID = " + student.getId(); 
+			stmt.close();
+			con.close();
+		}
+		catch(Exception e){ System.out.println(e);}
+	}
+	
+	public void deleteStudent(Student student) {
+		try{  
+			Class.forName("com.mysql.cj.jdbc.Driver");  
+			Connection con=DriverManager.getConnection(  
+			"jdbc:mysql://localhost:3306/Students","root","");  
+			String sql = "delete from firstclass where ID = ?";
+			PreparedStatement stmt=con.prepareStatement(sql);
+			stmt.setInt(1, student.getId());
+			stmt.executeUpdate();
 			
-			stmt.executeUpdate(sql);
-			
+			stmt.close();
 			con.close();
 		}
 		catch(Exception e){ System.out.println(e);}
